@@ -1,6 +1,8 @@
 const $=s=>document.querySelector(s),KEY='seungmin-phone-v1';
 const fresh=()=>({visited:[],messages:{},foodChecks:[],alarms:{cycle:true,pickup:true},favorites:[0,2,4,7,10,15],likes:[],bookmarks:[],bubbleSent:false,callEvent:'pending',callDue:null,callLogs:[],edits:{},wallpaper:0});
 let state;try{state={...fresh(),...JSON.parse(localStorage.getItem(KEY)||'null')}}catch{state=fresh()}
+// Apply corrected dialogue to previously saved scripted messages as well.
+if(state.messages.s){state.messages.s=state.messages.s.map(m=>({...m,text:JEONGSU_TEXT_UPDATES[m.text]||m.text}));save()}
 let page='lock',room='group',note='food',album='전체',photo=0,photoTab='library',safariTab='history',xTab='recommended',editor='Lightroom',voicePlaying=false,callMuted=false,callKeypad=false,callDigits='',callMode='',callSeconds=0,callTimer,ringTimer,callScheduled,callLines=[],audioContext;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch{}}
